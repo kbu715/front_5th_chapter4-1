@@ -1,19 +1,37 @@
 # 항해 플러스 프론트엔드 9주차 과제
 
 ## 프론트엔드 배포 파이프라인
+Next.js로 개발된 프로젝트를 GitHub Actions와 AWS S3 + CloudFront를 활용해 자동으로 배포하는 CI/CD 파이프라인을 구성합니다.
 
-## 개요
+
+## 배포 개요
 
 GitHub Actions에 워크플로우를 작성해 다음과 같이 배포가 진행되도록 합니다.
 
 (사전작업: Ubuntu 최신 버전 설치)
 
 1. Checkout 액션을 사용해 코드 내려받기
+> actions/checkout으로 GitHub 레포지토리의 코드를 runner에 내려받습니다.
+
 2. `npm ci` 명령어로 프로젝트 의존성 설치
+> npm ci 명령어를 통해 lockfile 기반으로 정확한 의존성을 설치합니다.
+
 3. `npm run build` 명령어로 Next.js 프로젝트 빌드
+> npm run build로 정적 파일을 생성합니다.
+
+
 4. AWS 자격 증명 구성
+> GitHub Secrets에 저장된 자격 증명을 사용해 AWS CLI를 인증합니다.
+
+
 5. 빌드된 파일을 S3 버킷에 동기화
+> aws s3 sync 명령어를 통해 빌드된 정적 파일을 S3 버킷에 업로드합니다.
+
+
 6. CloudFront 캐시 무효화
+> aws cloudfront create-invalidation으로 전 세계 엣지 서버의 캐시를 갱신합니다.
+
+
 
 ## 주요 링크
 
