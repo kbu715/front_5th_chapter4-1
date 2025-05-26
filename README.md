@@ -62,3 +62,46 @@ Next.js로 생성된 정적 파일을 업로드하면 웹사이트처럼 서비�
 ### Repository Secret과 환경 변수
 > 민감한 정보(AWS 자격 증명 등)는 GitHub Repository의 Secrets에 저장합니다.
 워크플로우 실행 시 환경 변수로 주입하여 안전하게 사용할 수 있습니다.
+
+
+## 📊 성능 비교: S3 vs CloudFront
+
+<table>
+  <tr>
+    <td align="center">
+      <div>
+        <img src="https://github.com/user-attachments/assets/d17f5cf0-de57-4f11-8cff-f47e9aab4c7b" alt="" />
+      </div>
+    </td>
+    <td align="center">
+      <div>
+        <img src="https://github.com/user-attachments/assets/158fb200-3dc8-4eb3-a1ab-7e4d85957610" alt="" />
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      S3 단독 (이미지 1)
+    </td>
+    <td align="center">
+      CloudFront (이미지 2)
+    </td>
+  </tr>
+</table>
+
+| 측정 지표               | S3 단독 (이미지 1) | CDN (CloudFront, 이미지 2) | 개선율           |
+|------------------------|---------------------|------------------------------|------------------|
+| **총 완료 시간 (Finish)** | 7.35s              | 7.28s                        | ✅ **0.95% ⬇️**     |
+| **DOMContentLoaded**   | 255ms               | 115ms                        | ✅ **54.9% ⬇️**     |
+| **로드 (Load)**        | 990ms               | 364ms                        | ✅ **63.2% ⬇️**     |
+| **전송 크기**           | 9.7 kB             | 15.6 kB                      | ❌ **60.8% ⬆️**   |
+| **리소스 크기**         | 39.0 MB            | 19.8 MB                      | ✅ **49.2% ⬇️**  |
+
+### 요약
+
+- **DOMContentLoaded**가 절반 이하로 감소하여 초기 렌더링 속도 개선.
+- **Load 이벤트** 시간도 약 **63%** 개선되어 전체 로딩 성능 향상.
+- 총 완료 시간(Finish)은 큰 차이는 없지만, 전반적인 반응성 향상 확인됨.
+- **리소스 크기**가 절반 수준으로 줄어든 반면, **전송 크기**는 약간 증가.
+
+> 결과적으로 CDN 적용을 통해 **사용자 체감 성능은 확실히 향상**됨.
