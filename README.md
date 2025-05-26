@@ -22,8 +22,24 @@ GitHub Actions에 워크플로우를 작성해 다음과 같이 배포가 진행
 
 ## 주요 개념
 
-- GitHub Actions과 CI/CD 도구:
-- S3와 스토리지:
-- CloudFront와 CDN:
-- 캐시 무효화(Cache Invalidation):
-- Repository secret과 환경변수:
+### GitHub Actions과 CI/CD 도구
+> GitHub Actions는 GitHub에서 제공하는 CI/CD 플랫폼으로, 워크플로우를 정의해 코드 린트, 빌드, 테스트, 배포를 자동화할 수 있습니다.
+.github/workflows 디렉토리에 .yml 파일을 작성하여 설정합니다.
+- CI(지속적 통합): 코드 변경 시 자동 테스트 및 빌드
+- CD(지속적 배포): 성공한 빌드를 자동으로 배포
+
+### S3와 정적 웹 호스팅
+> AWS S3는 정적 파일(HTML, JS, CSS 등)을 저장하고 웹 서버 없이 제공할 수 있는 객체 스토리지 서비스입니다.
+Next.js로 생성된 정적 파일을 업로드하면 웹사이트처럼 서비스할 수 있습니다.
+
+### CloudFront와 CDN
+> CloudFront는 AWS의 CDN 서비스로, 전 세계 엣지 로케이션에 콘텐츠를 캐싱합니다.
+사용자와 가까운 위치에서 빠르게 콘텐츠를 제공하여 지연 시간을 줄입니다.
+
+### 캐시 무효화 (Cache Invalidation)
+> CloudFront는 기본적으로 파일을 캐싱하므로, 새로 배포된 콘텐츠가 즉시 반영되지 않을 수 있습니다.
+`create-invalidation` 명령어로 캐시된 파일을 무효화하여 최신 상태를 유지합니다.
+
+### Repository Secret과 환경 변수
+> 민감한 정보(AWS 자격 증명 등)는 GitHub Repository의 Secrets에 저장합니다.
+워크플로우 실행 시 환경 변수로 주입하여 안전하게 사용할 수 있습니다.
