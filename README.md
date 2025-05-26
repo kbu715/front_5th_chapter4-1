@@ -2,6 +2,7 @@
 
 ## 프론트엔드 배포 파이프라인
 Next.js로 개발된 프로젝트를 GitHub Actions와 AWS S3 + CloudFront를 활용해 자동으로 배포하는 CI/CD 파이프라인을 구성합니다.
+![배포_파이프라인](https://github.com/user-attachments/assets/57019217-7802-414d-9856-d5b376a50230)
 
 
 ## 배포 개요
